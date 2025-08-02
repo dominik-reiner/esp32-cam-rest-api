@@ -1,0 +1,11 @@
+[tool.pixi.workspace]
+name = "esp32-cam-rest-api"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[tool.pixi.pypi-dependencies]
+esptool = "==5.0.1"
+mpremote = "==1.25.0"
+
+[tool.pixi.tasks]
+install = "sh install.sh"
