@@ -51,6 +51,7 @@ mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/.env" :".env"
 mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/config.py" :"config.py"
 mpremote connect "$ESP32_PORT" mkdir lib
 mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/lib/microdot.py" :"lib/microdot.py"
+mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/lib/microdot_asyncio.py" :"lib/microdot_asyncio.py"
 mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/webcam.py" :"webcam.py"
 mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/main.py" :"main.py"
 mpremote connect "$ESP32_PORT" cp "$LOCAL_PROJECT_DIR/boot.py" :"boot.py"

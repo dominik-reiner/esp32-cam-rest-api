@@ -1,6 +1,5 @@
-from lib.microdot import Microdot, Response
+from lib.microdot_asyncio import Microdot, Response
 import machine
-import uasyncio as asyncio
 import config
 from webcam import ESPCam
 import gc
@@ -17,6 +16,9 @@ camera = ESPCam(
     saturation=config.CAMERA_SATURATION,
     special_effect=config.CAMERA_SPECIAL_EFFECT,
     white_balance=config.CAMERA_WHITE_BALANCE,
+    agc_gain=config.CAMERA_AGC_GAIN,
+    aec_value=config.CAMERA_AEC_VALUE,
+    ae_levels=config.CAMERA_AE_LEVELS,
 )
 app = Microdot()
 
@@ -37,9 +39,6 @@ async def capture(request):
 
         if use_flash:
             flash.on()
-
-        # Wait for sensor to start and focus
-        await asyncio.sleep(2)
 
         # Capture the image
         try:
@@ -75,6 +74,9 @@ async def status(request):
                 "contrast": config.CAMERA_CONTRAST,
                 "brightness": config.CAMERA_BRIGHTNESS,
                 "saturation": config.CAMERA_SATURATION,
+                "agc_gain": config.CAMERA_AGC_GAIN,
+                "aec_value": config.CAMERA_AEC_VALUE,
+                "ae_levels": config.CAMERA_AE_LEVELS,
             },
         },
         200,

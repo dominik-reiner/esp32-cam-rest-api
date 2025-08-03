@@ -30,6 +30,10 @@ CAMERA_CONTRAST = 0  # -2 to 2
 CAMERA_BRIGHTNESS = 0  # -2 to 2
 CAMERA_SATURATION = 0  # -2 to 2
 
+CAMERA_AE_LEVELS = 0  # Auto Exposure Level (-2 to 2). Lower is darker.
+CAMERA_AGC_GAIN = 0  # Automatic Gain Control (0-30). Lower value is darker.
+CAMERA_AEC_VALUE = 100  # Automatic Exposure Control (0-1200). Lower value is darker.
+
 # Validate effect values
 for effect, value in [
     ("CAMERA_CONTRAST", CAMERA_CONTRAST),
@@ -52,7 +56,7 @@ if CAMERA_SPECIAL_EFFECT not in [
 ]:
     raise ValueError("Invalid special effect.")
 
-CAMERA_WHITE_BALANCE = "WB_SUNNY"
+CAMERA_WHITE_BALANCE = "WB_NONE"
 
 # Validate white balance
 if CAMERA_WHITE_BALANCE not in [

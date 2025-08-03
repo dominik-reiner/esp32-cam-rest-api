@@ -1,6 +1,8 @@
 # ESP32-CAM REST API
 
-A simple REST API for the ESP32-CAM using MicroPython.
+A simple REST API for the ESP32-CAM (OV2640) running on MicroPython
+
+![example image](image.jpg "Basil Plant")
 
 ## Features
 
@@ -18,13 +20,14 @@ A simple REST API for the ESP32-CAM using MicroPython.
 
 1. Install the dev requirements `pixi install`
 2. Flash the ESP32-CAM firmware:
-   - Download the camera-enabled MicroPython firmware from [micropython-camera-driver](https://github.com/lemariva/micropython-camera-driver/tree/master/firmware)
+   - Download the camera-enabled MicroPython firmware from [esp32-cam-micropython-2022](https://github.com/shariltumin/esp32-cam-micropython-2022)
+   - I am using firmwares-20230717/ESP32/AI-Thinker-OV2640/WiFi-SSL
    - Flash it using esptool.py
 
 ## Setup
 1. Copy the .env.example file to .env `cp .env.example .env`
 2. Update the WiFi credentials in `.env`
-3. Run the install script `pixi run install` (while the ESP32 is connected)
+3. Run the install script `pixi run install` (while the ESP32-CAM is connected)
 
 ## Usage
 
@@ -47,5 +50,5 @@ curl http://esp32cam.local/status
 This project builds upon the work of several open source projects and resources:
 
 - [MicroPython](https://micropython.org/) - The core Python implementation for microcontrollers
-- [micropython-camera-driver](https://github.com/lemariva/micropython-camera-driver) - ESP32-CAM driver and firmware
+- [esp32-cam-micropython-2022](https://github.com/shariltumin/esp32-cam-micropython-2022) - ESP32-CAM driver and firmware
 - [microdot](https://github.com/miguelgrinberg/microdot) - Modern and lightweight web framework for MicroPython
