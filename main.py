@@ -84,13 +84,10 @@ async def capture_base64(request):
         img_binary = _capture_image(use_flash=use_flash)
         # Encode the image buffer to a base64 string
         encoded_image = ubinascii.b2a_base64(img_binary).decode("utf-8").strip()
-        # Return the base64 encoded image as a JSON response
-        return {
-            "image": encoded_image,
-            "format": "jpeg",
-        }, 200, {"Content-Type": "application/json"}
+        # Return the base64 encoded image as a plain text response
+        return Response(body=encoded_image, headers={"Content-Type": "text/plain"})
     except Exception as e:
-        return {"error": str(e)}, 503, {"Content-Type": "application/json"}
+        return str(e), 503, {"Content-Type": "text/plain"}
 
 
 @app.route("/status")
