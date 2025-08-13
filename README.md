@@ -14,6 +14,7 @@ A simple REST API for the ESP32-CAM (OV2640) running on MicroPython
 
 - `GET /` - Health check
 - `GET /capture` - Take a photo and return it as JPEG
+- `GET /capture_base64` - Take a photo and return it as base64 encoded string
 - `GET /status` - Get current camera status
 
 ## Prerequisites

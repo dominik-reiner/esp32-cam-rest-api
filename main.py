@@ -3,6 +3,7 @@ import machine
 import config
 from webcam import ESPCam
 import gc
+import ubinascii
 
 # Initialize flash LED and create camera instance (but don't initialize yet)
 flash = machine.Pin(4, machine.Pin.OUT)
@@ -28,14 +29,12 @@ async def index(request):
     return {"status": "ok"}, 200, {"Content-Type": "application/json"}
 
 
-@app.route("/capture")
-async def capture(request):
+def _capture_image(use_flash=False):
+    """Internal function to capture an image."""
     buf = None
     try:
-        use_flash = request.args.get("flash", "false").lower() == "true"
-
         if not camera.initialize():
-            return {"error": "Failed to initialize camera"}, 503
+            raise Exception("Failed to initialize camera")
 
         if use_flash:
             flash.on()
@@ -43,11 +42,11 @@ async def capture(request):
         # Capture the image
         try:
             buf = camera.capture_image()
-            # Return the image as a JPEG response
-            return Response(body=buf, headers={"Content-Type": "image/jpeg"})
+            if buf is None:
+                raise Exception("Failed to capture image: Buffer is None")
+            return buf
         except Exception as e:
-            return {"error": str(e)}, 503, {"Content-Type": "application/json"}
-
+            raise Exception(f"Failed to capture image: {str(e)}")
     finally:
         if use_flash:
             flash.off()
@@ -60,6 +59,38 @@ async def capture(request):
         if buf is not None:
             del buf
         gc.collect()
+
+
+@app.route("/capture")
+async def capture(request):
+    use_flash = request.args.get("flash", "false").lower() == "true"
+
+    # Capture the image
+    try:
+        img_binary = _capture_image(use_flash=use_flash)
+        # Return the image as a JPEG response
+        return Response(body=img_binary, headers={"Content-Type": "image/jpeg"})
+
+    except Exception as e:
+        return {"error": str(e)}, 503, {"Content-Type": "application/json"}
+
+
+@app.route("/capture_base64")
+async def capture_base64(request):
+    use_flash = request.args.get("flash", "false").lower() == "true"
+
+    # Capture the image
+    try:
+        img_binary = _capture_image(use_flash=use_flash)
+        # Encode the image buffer to a base64 string
+        encoded_image = ubinascii.b2a_base64(img_binary).decode("utf-8").strip()
+        # Return the base64 encoded image as a JSON response
+        return {
+            "image": encoded_image,
+            "format": "jpeg",
+        }, 200, {"Content-Type": "application/json"}
+    except Exception as e:
+        return {"error": str(e)}, 503, {"Content-Type": "application/json"}
 
 
 @app.route("/status")
