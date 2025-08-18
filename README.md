@@ -46,10 +46,13 @@ curl http://esp32cam.local/capture > image.jpg
 curl http://esp32cam.local/status
 ```
 
-## Credits and Acknowledgments
+## License
 
-This project builds upon the work of several open source projects and resources:
+This project is licensed under the **MIT License**. For more information, please see the [LICENSE](LICENSE) file.
 
-- [MicroPython](https://micropython.org/) - The core Python implementation for microcontrollers
-- [esp32-cam-micropython-2022](https://github.com/shariltumin/esp32-cam-micropython-2022) - ESP32-CAM driver and firmware
-- [microdot](https://github.com/miguelgrinberg/microdot) - Modern and lightweight web framework for MicroPython
+This project uses various third-party libraries. A list of these libraries and their respective license notices can be found in the [NOTICE](NOTICE) file.
+
+Special thanks to the following libraries and tools:
+- [MicroPython](https://micropython.org/)
+- [esp32-cam-micropython-2022](https://github.com/shariltumin/esp32-cam-micropython-2022)
+- [microdot](https://github.com/miguelgrinberg/microdot)

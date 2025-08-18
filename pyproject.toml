@@ -1,11 +1,34 @@
+[project]
+name = "esp32-cam-rest-api"
+version = "0.1.0"
+license = "MIT"
+authors = [ {name = "Dominik Reiner", email = "dominik-reiner@web.de"}]
+requires-python = ">=3.12,<3.13"
+dependencies = ["esptool==5.0.1", "mpremote==1.25.0"]
+
+[project.optional-dependencies]
+test = ["licensecheck>=2025.1.0,<2026", "pip-licenses>=5.0.0,<6"]
+
+[tool.pixi.dependencies]
+python = "3.12.*"
+pip = ">=25.2,<26"
+
 [tool.pixi.workspace]
 name = "esp32-cam-rest-api"
 channels = ["conda-forge"]
 platforms = ["osx-arm64", "linux-64"]
 
-[tool.pixi.pypi-dependencies]
-esptool = "==5.0.1"
-mpremote = "==1.25.0"
-
 [tool.pixi.tasks]
 install = "sh install.sh"
+licensecheck = "licensecheck"
+notice = "pip-licenses --from=all --with-system --with-license-file --format=json --no-license-path --with-urls --with-authors --output-file=NOTICE"
+
+[tool.pixi.tasks.licenses]
+depends-on = [
+    { task = "licensecheck", environment = "test" },
+    { task = "notice", environment = "test" },
+]
+
+[tool.pixi.environments]
+default = {features = [], solve-group = "default"}
+test = {features = ["test"], solve-group = "default"}
